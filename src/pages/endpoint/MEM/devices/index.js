@@ -9,7 +9,6 @@ import {
   Password,
   PasswordOutlined,
   Key,
-  Edit,
   Security,
   FindInPage,
   Shield,
@@ -69,25 +68,6 @@ const Page = () => {
         },
       ],
       confirmText: "Select the User to set as the primary user for this device",
-    },
-    {
-      label: "Rename Device",
-      type: "POST",
-      icon: <Edit />,
-      url: "/api/ExecDeviceAction",
-      data: {
-        GUID: "id",
-        Action: "setDeviceName",
-      },
-      confirmText: "Enter the new name for the device",
-      fields: [
-        {
-          type: "textField",
-          name: "input",
-          label: "New Device Name",
-          required: true,
-        },
-      ],
     },
     {
       label: "Sync Device",
@@ -200,6 +180,19 @@ const Page = () => {
       },
       confirmText: "Are you sure you want to generate logs and ship these to MEM?",
     },
+    /*
+    {
+      label: "Rename device",
+      type: "POST",
+      icon: null,
+      url: "/api/ExecDeviceAction",
+      data: {
+        GUID: "id",
+        Action: "setDeviceName",
+      },
+      confirmText: "Enter the new name for the device",
+    },
+    */
     {
       label: "Fresh Start (Remove user data)",
       type: "POST",
@@ -325,11 +318,7 @@ const Page = () => {
   return (
     <CippTablePage
       title={pageTitle}
-      apiUrl="/api/ListGraphRequest"
-      apiData={{
-        Endpoint: "deviceManagement/managedDevices",
-      }}
-      apiDataKey="Results"
+      apiUrl="/api/ListDevices"
       actions={actions}
       queryKey={`MEMDevices-${tenantFilter}`}
       offCanvas={offCanvas}

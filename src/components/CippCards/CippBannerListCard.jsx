@@ -72,6 +72,7 @@ export const CippBannerListCard = (props) => {
                 <li key={item.id}>
                   <Stack
                     direction="row"
+                    flexWrap="wrap"
                     justifyContent="space-between"
                     sx={{
                       p: 3,
@@ -85,18 +86,12 @@ export const CippBannerListCard = (props) => {
                     onClick={isCollapsible ? () => handleExpand(item.id) : undefined}
                   >
                     {/* Left Side: cardLabelBox */}
-                    <Stack
-                      direction="row"
-                      spacing={2}
-                      alignItems="center"
-                      sx={{ flex: 1, minWidth: 0 }}
-                    >
+                    <Stack direction="row" spacing={2} alignItems="center">
                       <Box
                         sx={{
                           alignItems: "center",
                           display: "flex",
                           flexDirection: "column",
-                          flexShrink: 0,
                         }}
                       >
                         {typeof item.cardLabelBox === "object" ? (
@@ -116,16 +111,8 @@ export const CippBannerListCard = (props) => {
                       </Box>
 
                       {/* Main Text and Subtext */}
-                      <Box sx={{ flex: 1, minWidth: 0 }}>
-                        <Typography
-                          color="text.primary"
-                          variant="h6"
-                          sx={{
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
+                      <Box>
+                        <Typography color="text.primary" variant="h6">
                           {item.text}
                         </Typography>
                         <Typography color="text.secondary" variant="body2">
@@ -135,7 +122,7 @@ export const CippBannerListCard = (props) => {
                     </Stack>
 
                     {/* Right Side: Status and Expand Icon */}
-                    <Stack alignItems="center" direction="row" spacing={2} sx={{ flexShrink: 0 }}>
+                    <Stack alignItems="center" direction="row" spacing={2}>
                       {item?.statusText && (
                         <Stack alignItems="center" direction="row" spacing={1}>
                           <Box
@@ -179,7 +166,7 @@ export const CippBannerListCard = (props) => {
                         {item?.propertyItems?.length > 0 && (
                           <CippPropertyListCard
                             propertyItems={item.propertyItems || []}
-                            layout={other.layout || "dual"}
+                            layout="dual"
                             isFetching={item.isFetching || false}
                           />
                         )}

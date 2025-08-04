@@ -38,8 +38,6 @@ const DeployNamedLocationForm = () => {
             formControl={formControl}
             name="selectedTenants"
             type="multiple"
-            preselectedEnabled={true}
-            validators={{ required: "At least one tenant must be selected" }}
             allTenants={true}
           />
         </Grid>

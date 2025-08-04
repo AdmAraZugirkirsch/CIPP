@@ -29,18 +29,7 @@ const Page = () => {
   const [updatedAt, setUpdatedAt] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
-  const [hasDriftConflict, setHasDriftConflict] = useState(false);
   const initialStandardsRef = useRef({});
-  
-  // Check if this is drift mode
-  const isDriftMode = router.query.type === "drift";
-
-  // Set drift mode flag in form when in drift mode
-  useEffect(() => {
-    if (isDriftMode) {
-      formControl.setValue("isDriftTemplate", true);
-    }
-  }, [isDriftMode, formControl]);
 
   // Watch form values to check valid configuration
   const watchForm = useWatch({ control: formControl.control });
@@ -56,7 +45,7 @@ const Page = () => {
   useEffect(() => {
     const stepsStatus = {
       step1: !!_.get(watchForm, "templateName"),
-      step2: isDriftMode || _.get(watchForm, "tenantFilter", []).length > 0, // Skip tenant requirement for drift mode
+      step2: _.get(watchForm, "tenantFilter", []).length > 0,
       step3: Object.keys(selectedStandards).length > 0,
       step4:
         _.get(watchForm, "standards") &&
@@ -71,7 +60,7 @@ const Page = () => {
 
     const completedSteps = Object.values(stepsStatus).filter(Boolean).length;
     setCurrentStep(completedSteps);
-  }, [selectedStandards, watchForm, isDriftMode]);
+  }, [selectedStandards, watchForm]);
 
   // Handle route change events
   const handleRouteChange = useCallback(
@@ -262,11 +251,10 @@ const Page = () => {
   };
 
   // Determine if save button should be disabled based on configuration
-  const isSaveDisabled = isDriftMode
-    ? currentStep < 3 || hasDriftConflict // For drift mode, only require steps 1, 3, and 4 (skip tenant requirement) and no drift conflicts
-    : (!_.get(watchForm, "tenantFilter") ||
-       !_.get(watchForm, "tenantFilter").length ||
-       currentStep < 3);
+  const isSaveDisabled =
+    !_.get(watchForm, "tenantFilter") ||
+    !_.get(watchForm, "tenantFilter").length ||
+    currentStep < 3;
 
   const actions = [];
 
@@ -321,10 +309,7 @@ const Page = () => {
             sx={{ mb: 3 }}
           >
             <Typography variant="h4">
-              {editMode
-                ? (isDriftMode ? "Edit Drift Template" : "Edit Standards Template")
-                : (isDriftMode ? "Add Drift Template" : "Add Standards Template")
-              }
+              {editMode ? "Edit Standards Template" : "Add Standards Template"}
             </Typography>
             <Stack direction="row" spacing={2}>
               <Button
@@ -352,7 +337,7 @@ const Page = () => {
               {/* Left Column for Accordions */}
               <Grid size={{ xs: 12, lg: 4 }} sx={{ height: "100%", overflow: "auto", pr: 1 }}>
                 <CippStandardsSideBar
-                  title={isDriftMode ? "Drift Template Setup" : "Standard Template Setup"}
+                  title="Standard Template Setup"
                   subtitle="Follow the steps to configure the Standard"
                   createDialog={createDialog}
                   steps={steps}
@@ -361,8 +346,6 @@ const Page = () => {
                   selectedStandards={selectedStandards}
                   edit={editMode}
                   updatedAt={updatedAt}
-                  isDriftMode={isDriftMode}
-                  onDriftConflictChange={setHasDriftConflict}
                   onSaveSuccess={() => {
                     // Reset unsaved changes flag
                     setHasUnsavedChanges(false);
@@ -386,7 +369,6 @@ const Page = () => {
                       handleAddMultipleStandard={handleAddMultipleStandard} // Pass the handler for adding multiple
                       formControl={formControl}
                       editMode={editMode}
-                      isDriftMode={isDriftMode}
                     />
                   )}
                 </Stack>

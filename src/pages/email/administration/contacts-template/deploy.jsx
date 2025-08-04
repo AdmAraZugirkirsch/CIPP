@@ -31,7 +31,6 @@ const Page = () => {
             name="selectedTenants"
             type="multiple"
             allTenants={true}
-            preselectedEnabled={true}
             validators={{ required: "At least one tenant must be selected" }}
           />
         </Grid>

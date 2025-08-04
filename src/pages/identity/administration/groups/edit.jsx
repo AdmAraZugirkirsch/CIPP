@@ -98,7 +98,6 @@ const EditGroup = () => {
             }
             return null;
           })(),
-          securityEnabled: group.securityEnabled,
           // Initialize empty arrays for add/remove actions
           AddMember: [],
           RemoveMember: [],
@@ -113,7 +112,6 @@ const EditGroup = () => {
           allowExternal: groupInfo?.data?.allowExternal,
           sendCopies: groupInfo?.data?.sendCopies,
           hideFromOutlookClients: groupInfo?.data?.hideFromOutlookClients,
-          securityEnabled: group.securityEnabled,
         });
 
         // Reset the form with all values
@@ -127,12 +125,7 @@ const EditGroup = () => {
     const cleanedData = { ...formData };
 
     // Properties that should only be sent if they've changed from initial values
-    const changeDetectionProperties = [
-      "allowExternal",
-      "sendCopies",
-      "hideFromOutlookClients",
-      "securityEnabled",
-    ];
+    const changeDetectionProperties = ["allowExternal", "sendCopies", "hideFromOutlookClients"];
 
     changeDetectionProperties.forEach((property) => {
       if (formData[property] === initialValues[property]) {
@@ -409,18 +402,6 @@ const EditGroup = () => {
                     type="switch"
                     label="Hide group mailbox from Outlook"
                     name="hideFromOutlookClients"
-                    formControl={formControl}
-                    isFetching={groupInfo.isFetching}
-                    disabled={groupInfo.isFetching}
-                  />
-                </Grid>
-              )}
-              {groupType === "Microsoft 365" && (
-                <Grid size={{ xs: 12 }}>
-                  <CippFormComponent
-                    type="switch"
-                    label="Security Enabled"
-                    name="securityEnabled"
                     formControl={formControl}
                     isFetching={groupInfo.isFetching}
                     disabled={groupInfo.isFetching}

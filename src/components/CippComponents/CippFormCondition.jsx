@@ -45,12 +45,7 @@ export const CippFormCondition = (props) => {
 
   if (propertyName && propertyName !== "value") {
     watchedValue = get(watcher, propertyName);
-    // Only extract from compareValue if it's an object, otherwise use as-is
-    if (typeof compareValue === "object" && compareValue !== null) {
-      compareTargetValue = get(compareValue, propertyName);
-    } else {
-      compareTargetValue = compareValue;
-    }
+    compareTargetValue = get(compareValue, propertyName);
   }
 
   /*console.log("CippFormCondition: ", {
@@ -161,19 +156,9 @@ export const CippFormCondition = (props) => {
           )
         );
       case "valueEq":
-        if (Array.isArray(watcher)) {
-          return watcher.some((item) => item?.value === compareValue);
-        } else if (typeof watcher === "object" && watcher !== null) {
-          return watcher?.value === compareValue;
-        }
-        return false;
+        return Array.isArray(watcher) && watcher.some((item) => item?.value === compareValue);
       case "valueNotEq":
-        if (Array.isArray(watcher)) {
-          return watcher.some((item) => item?.value !== compareValue);
-        } else if (typeof watcher === "object" && watcher !== null) {
-          return watcher?.value !== compareValue;
-        }
-        return false;
+        return Array.isArray(watcher) && watcher.some((item) => item?.value !== compareValue);
       case "valueContains":
         return (
           Array.isArray(watcher) &&
