@@ -20,7 +20,7 @@ jobs:
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_WONDERFUL_BAY_035CBDD03 }}
-          repo_token: "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" # Used for Github integrations (i.e. PR comments)
+          repo_token: "ba7ed1d8f1fd17fadd44a022792615c6092162da1e3219326c7daab8f285331401-50ac7796-3c90-4c42-9ec7-88d0ff6ae6ea0033001035cbdd03" # Used for Github integrations (i.e. PR comments)
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
@@ -40,6 +40,7 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_WONDERFUL_BAY_035CBDD03 }}
           action: "close"
+
 
 
 
