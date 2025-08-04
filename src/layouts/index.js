@@ -137,8 +137,6 @@ export const Layout = (props) => {
               if (!hasPermission) {
                 return null;
               }
-            } else {
-              return null;
             }
             // check sub-items
             if (item.items && item.items.length > 0) {
@@ -150,6 +148,7 @@ export const Layout = (props) => {
           })
           .filter(Boolean);
       };
+
       const filteredMenu = filterItemsByRole(nativeMenuItems);
       setMenuItems(filteredMenu);
     } else if (
@@ -160,14 +159,7 @@ export const Layout = (props) => {
     ) {
       setHideSidebar(true);
     }
-  }, [
-    currentRole.isSuccess,
-    swaStatus.data,
-    swaStatus.isLoading,
-    currentRole.data?.clientPrincipal?.userRoles,
-    currentRole.data?.permissions,
-    currentRole.isFetching,
-  ]);
+  }, [currentRole.isSuccess, swaStatus.data, swaStatus.isLoading]);
 
   const handleNavPin = useCallback(() => {
     settings.handleUpdate({

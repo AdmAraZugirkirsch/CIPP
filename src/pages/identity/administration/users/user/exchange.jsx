@@ -65,7 +65,7 @@ const Page = () => {
     waiting: waiting,
   });
   const userRequest = ApiGetCall({
-    url: `/api/ListUserMailboxDetails?UserId=${userId}&tenantFilter=${userSettingsDefaults.currentTenant}&userMail=${graphUserRequest.data?.[0]?.userPrincipalName}`,
+    url: `/api/ListUserMailboxDetails?UserId=${userId}&tenantFilter=${userSettingsDefaults.currentTenant}`,
     queryKey: `Mailbox-${userId}`,
     waiting: waiting,
   });
